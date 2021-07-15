@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +80,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
 
     private String m_pointName = "POINT";
 
-    private class dpFile {
+    private static class dpFile {
         private String localFilenameWithPath;
         private String remoteFilename;
 
@@ -140,6 +142,8 @@ public class RtkNaviService extends IntentService implements LocationListener {
     private static SolutionStatus previousSolutionStatus;
     private static Context context;
 
+    private NotificationChannel notificationChannel;
+
     private RtkCommon rtkCommon;
 
     // Binder given to clients
@@ -172,6 +176,10 @@ public class RtkNaviService extends IntentService implements LocationListener {
 
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mCpuLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+
+        notificationChannel = new NotificationChannel("rtkgps", getString(R.string.app_name), NotificationManager.IMPORTANCE_LOW);
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(notificationChannel);
     }
 
     @Override
@@ -286,9 +294,9 @@ public class RtkNaviService extends IntentService implements LocationListener {
 
     private void addPointToCRW(String pointName) {
         double lat, lon, height, dLat, dLon;
-        double Qe[] = new double[9];
+        double[] Qe = new double[9];
         Position3d roverPos;
-        int nbSat = 0;
+        int nbSat;
 
         GpsTime gpsTime = new GpsTime();
         gpsTime.setTime(System.currentTimeMillis());
@@ -479,7 +487,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
     private void finalizeGpxTrace() {
         if (mBoolGenerateGPXTrace && (mGpxTrace != null))
         {
-            SharedPreferences prefs= this.getBaseContext().getSharedPreferences(OutputGPXTraceFragment.SHARED_PREFS_NAME, 0);
+            SharedPreferences prefs = this.getBaseContext().getSharedPreferences(OutputGPXTraceFragment.SHARED_PREFS_NAME, 0);
 //            if(prefs.getBoolean(OutputGPXTraceFragment.KEY_SYNCDROPBOX, false))
 //                {
 //                    String szFilename = prefs.getString(OutputGPXTraceFragment.KEY_FILENAME, "");
@@ -642,7 +650,6 @@ public class RtkNaviService extends IntentService implements LocationListener {
         stop();
     }
 
-    @SuppressWarnings("deprecation")
     private NotificationCompat.Builder createForegroundNotificationBuilder() {
         CharSequence text = getText(R.string.local_service_started);
 
@@ -651,7 +658,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), 0);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, notificationChannel.getId());
         builder.setContentTitle(getText(R.string.local_service_label));
         builder.setContentText(text);
         builder.setContentIntent(contentIntent);
@@ -665,7 +672,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
 
     private class BluetoothCallbacks implements BluetoothToRtklib.Callbacks {
 
-        private int mStreamId;
+        private final int mStreamId;
         private final Handler mHandler;
 
         public BluetoothCallbacks(int streamId) {
@@ -710,7 +717,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
 
     private class UsbCallbacks implements UsbToRtklib.Callbacks {
 
-        private int mStreamId;
+        private final int mStreamId;
         private final Handler mHandler;
 
         public UsbCallbacks(int streamId) {
@@ -733,7 +740,7 @@ public class RtkNaviService extends IntentService implements LocationListener {
                 public void run() {
                     mRtkServer.sendStartupCommands(mStreamId);
                 }
-            }.run();
+            }.start();
 
         }
 
@@ -974,22 +981,19 @@ public class RtkNaviService extends IntentService implements LocationListener {
         }
         newLocation.setSpeed(0f);
 
-        if (mLocationPrec == null){
+        if (mLocationPrec == null) {
             newLocation.setBearing(0f);
             newLocation.setSpeed(0f);
-            mLocationPrec = newLocation;
-        }else
-        {
+        } else {
             float fBearing = mLocationPrec.bearingTo(newLocation)+180;
-            if (fBearing>360)
-            {
+            if (fBearing>360) {
                 fBearing -= 360;
             }
             float fSpeed = (mLocationPrec.distanceTo(newLocation))/((newLocation.getTime()-mLocationPrec.getTime())/1000);
             newLocation.setBearing(fBearing);
             newLocation.setSpeed(fSpeed);
-            mLocationPrec = newLocation;
         }
+        mLocationPrec = newLocation;
 
         return newLocation;
     }

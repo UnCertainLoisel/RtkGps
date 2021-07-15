@@ -53,10 +53,10 @@
   <string name="navdraw_item_ntripcaster_options">Options du caster</string>
   <string name="navdraw_item_save_settings">Sauvegarder les paramètres</string>
   <string name="navdraw_item_save_settings_finished">Les paramètres sont sauvegardés dans un .zip situé dans le dossier RtkGps+ (%s).</string>
-  <string name="navdraw_item_save_settings_failed">Problème! Les paramètres n'ont pas été saugegardés !!! (%s).</string>
+  <string name="navdraw_item_save_settings_failed">Problème! Les paramètres n\'ont pas été saugegardés !!! (%s).</string>
   <string name="navdraw_item_load_settings">Charger les paramètres</string>
   <string name="navdraw_item_load_settings_finished">Les paramètres sont chargés à partir du .zip situé dans le dossier RtkGps+ (%s). Fermer et ré-ouvrir RtkGPS+ pour la MAJ des paramètres. </string>
-  <string name="navdraw_item_load_settings_failed">Le fichier de paramètres n'a pas été trouvé !!! (%s).</string>
+  <string name="navdraw_item_load_settings_failed">Le fichier de paramètres n\'a pas été trouvé !!! (%s).</string>
 
   <string-array name="rtk_server_receiver">
     <item>Mobile</item>
@@ -610,7 +610,7 @@
   <string name="file_filename_title">Nom de fichier</string>
   <string name="file_filename_summary">peut contenir %Y (année) %m (mois) %d (jour) %h (heure) %M (minutes) %S (secondes) pour générer un nom dynamique</string>
   <string name="file_syncdropbox_title">Synchronisation vers Dropbox</string>
-  <string name="file_syncdropbox_summary">A besoin d\'un nom de fichier réel (c\'est à dire: ne contenant ne pas de %Y %m...), le fichier sur Dropbox est renommé selon la date de démarrage.</string>
+  <string name="file_syncdropbox_summary">A besoin d\'un nom de fichier réel (c\'est à dire: ne contenant ne pas de %Y %m…), le fichier sur Dropbox est renommé selon la date de démarrage.</string>
   <string name="file_zipbeforesync_title">Zipper avant la synchronisation</string>
   <string name="file_zipbeforesync_summary">Compresser ce fichier avant de l\'envoyer à Dropbox</string>
   <!-- TCP client stream preferences -->
@@ -753,9 +753,9 @@
   <string name="ntripcaster_options_enabled_title">Caster NTRIP</string>
   <string name="ntripcaster_options_brutal_ending_summary">En stoppant le caster NTRIP, RTKGPS+ sera également fermé, ceci pour être sûr que toutes les connexions sont fermées.</string>
   <string name="ntripcaster_options_brutal_ending_title">Fermeture brutale</string>
-  <string name="ntripcaster_options_warning">Attention\nceci est une fonction très expérimentale!\nComprenez que lorsque vous arrêtez de le caster, RTKGPS+ va se fermer pour forcer le nettoyage de la mémoire et la fermeture des connexions.\nveuillez ne pas me blâmer pour ça...\n\'Nactivez cette fonction que si vous comprenez ce que vous faites.</string>
+  <string name="ntripcaster_options_warning">Attention\nceci est une fonction très expérimentale!\nComprenez que lorsque vous arrêtez de le caster, RTKGPS+ va se fermer pour forcer le nettoyage de la mémoire et la fermeture des connexions.\nveuillez ne pas me blâmer pour ça…\n\'Nactivez cette fonction que si vous comprenez ce que vous faites.</string>
   <string name="permissions_request_title">Autorisations</string>
-  <string name="permissions_request_message">Le stockage est requis pour les geoïdes, les éphémérides et les données brutes, Bluetooth est requis pour les périphériques externes, Internet est requis pour toutes les communications IP externes... Le GPS est&#8230; vous le savez évidemment, tous les autres sont également nécessaires.</string>
+  <string name="permissions_request_message">Le stockage est requis pour les geoïdes, les éphémérides et les données brutes, Bluetooth est requis pour les périphériques externes, Internet est requis pour toutes les communications IP externes… Le GPS est… vous le savez évidemment, tous les autres sont également nécessaires.</string>
   <string name="menu_add_point">Ajouter un point à la session</string>
   <string name="permission_to_use_gps">Sans gps, nous ne pouvons pas continuer</string>
   <string name="permission_to_use_gps_title">Accès au GPS</string>

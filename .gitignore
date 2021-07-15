@@ -22,6 +22,9 @@
 /.gradle
 /build
 
+.idea
+.externalNativeBuild
+.cxx
 
 
 .README.md.html

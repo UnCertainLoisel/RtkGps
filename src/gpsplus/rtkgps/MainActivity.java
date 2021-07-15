@@ -18,6 +18,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.StrictMode;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
@@ -133,6 +134,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
                 ).withListener(dialogMultiplePermissionsListener)
                 .check();
 
+        // Causes a crash on start
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .build());
+        
         PackageManager m = getPackageManager();
         String s = getPackageName();
         try {
